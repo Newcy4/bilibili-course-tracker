@@ -208,7 +208,7 @@ function calculateProgress() {
     // 基于时长更新总体进度
     const overallProgress = totalDuration > 0 ? (totalWatchedDuration / totalDuration) * 100 : 0;
     document.getElementById('overallProgress').textContent = `${overallProgress.toFixed(1)}%`;
-    document.getElementById('totalWatchedDuration').textContent = `${formatDuration(totalWatchedDuration)}小时`;
+    document.getElementById('totalWatchedDuration').textContent = `${formatDuration(totalWatchedDuration)}`;
     
     // 显示详细统计信息
     console.log('学习进度统计:');
