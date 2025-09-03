@@ -30,18 +30,18 @@
         .header {
             background: linear-gradient(135deg, #ff6b6b, #ee5a24);
             color: white;
-            padding: 30px;
+            padding: 10px;
             text-align: center;
         }
 
         .header h1 {
-            font-size: 2.5em;
+            font-size: 1.2em;
             margin-bottom: 10px;
             font-weight: 700;
         }
 
         .header p {
-            font-size: 1.1em;
+            font-size: 1em;
             opacity: 0.9;
         }
 
@@ -49,13 +49,13 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
-            padding: 30px;
+            padding: 20px;
             background: #f8f9fa;
         }
 
         .stat-card {
             background: white;
-            padding: 25px;
+            padding: 15px;
             border-radius: 15px;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
@@ -67,7 +67,7 @@
         }
 
         .stat-number {
-            font-size: 2.5em;
+            font-size: 1.2em;
             font-weight: bold;
             color: #667eea;
             margin-bottom: 10px;
@@ -79,11 +79,11 @@
         }
 
         .progress-section {
-            padding: 30px;
+            padding: 15px;
         }
 
         .section-title {
-            font-size: 1.8em;
+            font-size: 1.2em;
             margin-bottom: 20px;
             color: #333;
             text-align: center;
@@ -252,7 +252,7 @@
             }
             
             .header h1 {
-                font-size: 2em;
+                font-size: 1.2em;
             }
             
             .stats-grid {
@@ -291,16 +291,20 @@
         <div id="content" style="display: none;">
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-number" id="totalCourses">0</div>
                     <div class="stat-label">总课程数</div>
+                    <div class="stat-number" id="totalCourses">0</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number" id="totalEpisodes">0</div>
                     <div class="stat-label">总集数</div>
+                    <div class="stat-number" id="totalEpisodes">0</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number" id="totalDuration">0小时</div>
                     <div class="stat-label">总时长</div>
+                    <div class="stat-number" id="totalDuration">0小时</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">🎯 总体学习进度</div>
+                    <div class="stat-number" id="overallProgress">0%</div>
                 </div>
             </div>
 
@@ -329,11 +333,11 @@
                 <button id="importProgressBtn" class="control-btn import-btn">📤 导入进度</button>
                 <input type="file" id="importProgressFile" accept=".json" style="display: none;">
             </div>
-            <div class="overall-progress">
+            <!-- <div class="overall-progress">
                 <h2>🎯 总体学习进度</h2>
                 <div class="progress-number" id="overallProgress">0%</div>
                 <p>基于学习时长的综合进度</p>
-            </div>
+            </div> -->
         </div>
     </div>
 
