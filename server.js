@@ -23,6 +23,7 @@ app.post('/api/bilibili', async (req, res) => {
             return res.status(400).json({ error: '缺少courseIdArr参数' });
         }
         let htmlList = [];
+        let errorList = []  // 解析错误的列表
         for (let i = 0; i < courseIdArr.length; i++) {
             let url = `https://www.bilibili.com/video/${courseIdArr[i]}`;
             console.log('代理请求B站页面:', url);
@@ -39,9 +40,13 @@ app.post('/api/bilibili', async (req, res) => {
                 timeout: 10000, // 10秒超时
                 responseType: 'text' // 确保返回文本格式
             });
-            htmlList.push({htmlContent:matchCourseList(response.data), name: matchCourseName(response.data)});
+            if(matchCourseList(response.data)) {
+                htmlList.push({htmlContent:matchCourseList(response.data), name: matchCourseName(response.data), courseId: courseIdArr[i]});
+            } else {
+                errorList.push({htmlContent:matchCourseList(response.data), name: matchCourseName(response.data), courseId: courseIdArr[i]});
+            }
         }
-        console.log("htmlList",htmlList)
+        console.log("解析结果➡️htmlList",htmlList, "errorList", errorList)
         
         // 设置CORS头，允许前端访问
         res.header('Access-Control-Allow-Origin', '*');
@@ -49,7 +54,7 @@ app.post('/api/bilibili', async (req, res) => {
         res.header('Access-Control-Allow-Headers', 'Content-Type');
         
         
-        res.send(htmlList);
+        res.send({htmlList, errorList});
         
     } catch (error) {
         console.error('代理请求失败:', error.message);

@@ -1,3 +1,5 @@
+// todo: 解决某些连接解析失败的情况，比如https://www.bilibili.com/video/BV1atCRYsE7x/?spm_id_from=333.337.search-card.all.click
+
 courseIdArr =  [];  //课程id 数组
 // 课程数据存储
 coursesData = [];
@@ -100,12 +102,25 @@ async function loadCoursesData() {
     }
 }
 
+function compareCourseIdArrAndCoursesData() {
+    const CoursesDataIdArr = coursesData.map(course => course.courseId);
+    console.log("CoursesDataIdArr", CoursesDataIdArr);
+    for (let i = 0; i < courseIdArr.length; i++) {
+        const courseId = courseIdArr[i];
+        if(!CoursesDataIdArr.includes(courseId)) {
+            console.log('存在未解析的courseId', courseId);
+            return false
+        } 
+    }
+    return true;
+}
+
 // 调用http://localhost:8000/api/bilibili，传入{"courseIdArr":["BV1Za4y1r7KE", "BV1ay421q7KG"]}参数，将获取到的课程列表 localstorage 中
 async function loadCoursesFromBilibili() {
     console.log('开始加载课程数据', courseIdArr);
     console.log('本地缓存课程数据', coursesData);
     // 如果本地有缓存就不请求了
-    if (coursesData.length > 0) {
+    if (compareCourseIdArrAndCoursesData()) {
         // 隐藏加载提示，显示内容
         document.getElementById('loading').style.display = 'none';
         document.getElementById('content').style.display = 'block';
@@ -127,8 +142,18 @@ async function loadCoursesFromBilibili() {
         console.log("response", response)
         console.log("response.ok", response.ok)
         if (response.ok) {
-            coursesHtmlList = await response.json();
-            coursesData = generateCoursesData(coursesHtmlList)
+            coursesHtmlListRes = await response.json();
+            let errorIdArr = coursesHtmlListRes.errorList.map(item => item.courseId)
+            let errorCourseNameArr = coursesHtmlListRes.errorList.map(item => item.name)
+            console.log("errorIdArr", errorIdArr)
+            // 如果存在有问题的，就剔除
+            if(errorIdArr.length > 0) {
+                alert(`以下课程解析失败：\n${errorCourseNameArr.join('\n')}`);
+                courseIdArr = courseIdArr.filter(item => !errorIdArr.includes(item))
+                localStorage.setItem('courseIdArr', JSON.stringify(courseIdArr))
+                console.log("剔除有问题的courseId后，已经剔除，courseIdArr", courseIdArr)
+            }
+            coursesData = generateCoursesData(coursesHtmlListRes.htmlList)
             console.log('成功加载课程数据:', coursesData.length, '个课程');
             localStorage.setItem('coursesData', JSON.stringify(coursesData));
             
@@ -272,11 +297,15 @@ function calculateProgress() {
     console.log(`基于时长的总体进度: ${overallProgress.toFixed(1)}%`);
 }
 
-// 页面加载完成后初始化
-document.addEventListener('DOMContentLoaded', function() {
+function initGlobalData() {
     courseIdArr = JSON.parse(localStorage.getItem('courseIdArr')) || [];  //课程id 数组
     coursesData = JSON.parse(localStorage.getItem('coursesData')) || [];  //课程数据 数组
-    console.log('开局读取 courseIdArr', courseIdArr);
+}
+
+// 页面加载完成后初始化
+document.addEventListener('DOMContentLoaded', function() {
+    initGlobalData()
+    
     loadCoursesFromBilibili();
     
     // 初始化控制按钮
@@ -414,6 +443,7 @@ function initializeControlButtons() {
         console.log('当前课程组内容：', typeof courseIdArr, courseIdArr);
         if(courseIdArr.includes(courseId)) {
             alert('课程已存在');
+            input.value = '';
             return;
         }
         courseIdArr.push(courseId);

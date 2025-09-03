@@ -31,7 +31,7 @@ function formatDuration(minutes) {
 }
 
 // 解析HTML文件中的课程数据
-function parseCourseHTML(htmlContent, courseName) {
+function parseCourseHTML(htmlContent, courseName, courseId) {
     const episodes = [];
     
     // 使用正则表达式匹配每个视频项
@@ -70,7 +70,8 @@ function parseCourseHTML(htmlContent, courseName) {
         name: courseName,
         episodes: episodes,
         totalEpisodes: episodes.length,
-        totalDuration: episodes.reduce((sum, ep) => sum + ep.duration, 0)
+        totalDuration: episodes.reduce((sum, ep) => sum + ep.duration, 0),
+        courseId: courseId
     };
 }
 
@@ -85,7 +86,7 @@ function loadAllCoursesData(coursesHtmlList) {
 
     coursesHtmlList.forEach(courseItem => {
         try {
-            const courseData = parseCourseHTML(courseItem.htmlContent, courseItem.name);
+            const courseData = parseCourseHTML(courseItem.htmlContent, courseItem.name, courseItem.courseId);
             coursesData.push(courseData);
             console.log(`成功加载课程: ${courseItem.name} (${courseData.totalEpisodes}集, 总时长: ${formatDuration(courseData.totalDuration)})`);
         } catch (error) {

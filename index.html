@@ -245,6 +245,59 @@
         .import-btn:hover {
             box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
         }
+
+        /* 添加课程输入框样式 */
+        .add-course-container {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        #addCourseInput {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+            padding: 15px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1em;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        #addCourseInput::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
+        }
+
+        #addCourseInput:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        #addCourseInput:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .add-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24) !important;
+            white-space: nowrap;
+        }
+
+        .add-btn:hover {
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4) !important;
+        }
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -275,9 +328,13 @@
     <div class="container">
         <div class="header">
             <h1>📚 B站课程学习进度计算器</h1>
-            <input type="text" id="addCourseInput" placeholder="请输入b站课程url">
-            <button id="addCourseBtn" class="control-btn add-btn">🔍 添加课程</button>
+            <!-- <input type="text" id="addCourseInput" placeholder="请输入b站课程url">
+            <button id="addCourseBtn" class="control-btn add-btn">🔍 添加课程</button> -->
             <p>轻松追踪你的学习进度，科学规划学习时间</p>
+            <div class="add-course-container">
+                <input type="text" id="addCourseInput" placeholder="请输入b站课程url">
+                <button id="addCourseBtn" class="control-btn add-btn">🔍 添加课程</button>
+            </div>
         </div>
 
         <div id="loading" class="loading">
