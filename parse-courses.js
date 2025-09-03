@@ -1,6 +1,3 @@
-const fs = require('fs');
-const path = require('path');
-
 // 解析时长字符串为分钟数
 function parseDuration(durationStr) {
     if (!durationStr) return 0;
@@ -77,50 +74,22 @@ function parseCourseHTML(htmlContent, courseName) {
     };
 }
 
-// 获取courses文件夹中的所有HTML文件
-function getCourseFiles() {
-    try {
-        const coursesDir = path.join(__dirname, 'courses');
-        
-        // 检查courses文件夹是否存在
-        if (!fs.existsSync(coursesDir)) {
-            console.log('courses文件夹不存在');
-            return [];
-        }
-        
-        // 读取courses文件夹中的所有文件
-        const files = fs.readdirSync(coursesDir);
-        
-        // 过滤出HTML文件
-        const htmlFiles = files.filter(file => 
-            file.toLowerCase().endsWith('.html')
-        );
-        
-        console.log(`发现 ${htmlFiles.length} 个课程文件:`, htmlFiles);
-        
-        return htmlFiles.map(file => ({
-            name: file.replace('.html', ''),
-            file: path.join(coursesDir, file)
-        }));
-    } catch (error) {
-        console.error('读取课程文件失败:', error);
-        return [];
-    }
-}
 
-// 加载所有课程数据
-function loadAllCoursesData() {
-    const courseFiles = getCourseFiles();
-    const coursesData = [];
-    
-    courseFiles.forEach(courseFile => {
+
+
+// 参数 coursesHtmlList: [{htmlContent: string, name: string}]
+function loadAllCoursesData(coursesHtmlList) {
+    coursesData = localStorage.getItem('courseData') || [];
+    // localStorage 有东西就返回
+    if (coursesData && coursesData.length > 0) return coursesData;
+
+    coursesHtmlList.forEach(courseItem => {
         try {
-            const htmlContent = fs.readFileSync(courseFile.file, 'utf8');
-            const courseData = parseCourseHTML(htmlContent, courseFile.name);
+            const courseData = parseCourseHTML(courseItem.htmlContent, courseItem.name);
             coursesData.push(courseData);
-            console.log(`成功加载课程: ${courseFile.name} (${courseData.totalEpisodes}集, 总时长: ${formatDuration(courseData.totalDuration)})`);
+            console.log(`成功加载课程: ${courseItem.name} (${courseData.totalEpisodes}集, 总时长: ${formatDuration(courseData.totalDuration)})`);
         } catch (error) {
-            console.error(`加载课程文件失败: ${courseFile.file}`, error);
+            console.error(`加载课程文件失败: ${courseItem.name}`, error);
         }
     });
     
@@ -128,10 +97,10 @@ function loadAllCoursesData() {
 }
 
 // 生成课程数据JSON文件
-function generateCoursesData() {
+function generateCoursesData(coursesHtmlList) {
     console.log('开始解析courses目录中的课程文件...');
     
-    const coursesData = loadAllCoursesData();
+    const coursesData = loadAllCoursesData(coursesHtmlList);
     
     if (coursesData.length === 0) {
         console.log('没有找到任何课程文件');
@@ -166,22 +135,5 @@ function generateCoursesData() {
         }
     });
     
-    // 保存到JSON文件
-    const outputFile = 'courses-data.json';
-    fs.writeFileSync(outputFile, JSON.stringify(coursesData, null, 2), 'utf8');
-    console.log(`\n课程数据已保存到: ${outputFile}`);
-    
     return coursesData;
 }
-
-// 如果直接运行此脚本
-if (require.main === module) {
-    generateCoursesData();
-}
-
-module.exports = {
-    loadAllCoursesData,
-    parseCourseHTML,
-    parseDuration,
-    formatDuration
-};

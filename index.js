@@ -1,5 +1,6 @@
+courseIdArr =  [];  //课程id 数组
 // 课程数据存储
-let coursesData = [];
+coursesData = [];
 
 // 本地存储的键名
 const STORAGE_KEY = 'bilibili-course-progress';
@@ -97,6 +98,60 @@ async function loadCoursesData() {
         document.getElementById('loading').style.display = 'none';
         document.getElementById('error').style.display = 'block';
     }
+}
+
+// 调用http://localhost:8000/api/bilibili，传入{"courseIdArr":["BV1Za4y1r7KE", "BV1ay421q7KG"]}参数，将获取到的课程列表 localstorage 中
+async function loadCoursesFromBilibili() {
+    console.log('开始加载课程数据', courseIdArr);
+    console.log('本地缓存课程数据', coursesData);
+    // 如果本地有缓存就不请求了
+    if (coursesData.length > 0) {
+        // 隐藏加载提示，显示内容
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+        renderCoursesTable();
+        updateSummaryStats();
+
+        // 加载保存的学习进度
+        loadAndApplyProgress();
+        return;
+    }
+    try {
+        const response = await fetch('http://localhost:8000/api/bilibili', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ courseIdArr: courseIdArr }),
+        });
+        console.log("response", response)
+        console.log("response.ok", response.ok)
+        if (response.ok) {
+            coursesHtmlList = await response.json();
+            coursesData = generateCoursesData(coursesHtmlList)
+            console.log('成功加载课程数据:', coursesData.length, '个课程');
+            localStorage.setItem('coursesData', JSON.stringify(coursesData));
+            
+            // 隐藏加载提示，显示内容
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+
+            renderCoursesTable();
+            updateSummaryStats();
+            
+            // 加载保存的学习进度
+            loadAndApplyProgress();
+        } else {
+            throw new Error('无法加载课程数据文件');
+        }
+    } catch (error) {
+        console.error('加载课程数据失败:', error);
+        
+        // 显示错误信息
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error').style.display = 'block';
+    }
+    
 }
 
 // 加载并应用保存的学习进度
@@ -219,7 +274,10 @@ function calculateProgress() {
 
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', function() {
-    loadCoursesData();
+    courseIdArr = JSON.parse(localStorage.getItem('courseIdArr')) || [];  //课程id 数组
+    coursesData = JSON.parse(localStorage.getItem('coursesData')) || [];  //课程数据 数组
+    console.log('开局读取 courseIdArr', courseIdArr);
+    loadCoursesFromBilibili();
     
     // 初始化控制按钮
     initializeControlButtons();    
@@ -346,9 +404,31 @@ function initializeControlButtons() {
             }, 2000);
         }
     });
+
+    // 添加课程逻辑，传入 b 站链接（如：https://www.bilibili.com/video/BV1Za4y1r7KE/?spm_id_from=333.1391.0.0&p=7&vd_source=284f93eab7baf424a1744805616450dc），自动匹配BV1Za4y1r7KE
+    function addCourse(event) {
+        const input = document.getElementById('addCourseInput');
+        const courseUrl = input.value;
+        // 匹配video/内容/ 之间的内容
+        const courseId = courseUrl.match(/video\/([^/]+)\//)[1];
+        console.log('当前课程组内容：', typeof courseIdArr, courseIdArr);
+        if(courseIdArr.includes(courseId)) {
+            alert('课程已存在');
+            return;
+        }
+        courseIdArr.push(courseId);
+        console.log('添加课程:', courseId, '当前课程组:', courseIdArr);
+        localStorage.setItem('courseIdArr', JSON.stringify(courseIdArr))
+        input.value = '';
+        // 刷新页面
+        window.location.reload();
+    }
     
     // 导出按钮
     document.getElementById('exportProgressBtn').addEventListener('click', exportProgress);
+
+    // 添加课程按钮添加课程按钮
+    document.getElementById('addCourseBtn').addEventListener('click', addCourse);
     
     // 导入按钮
     document.getElementById('importProgressBtn').addEventListener('click', function() {
