@@ -4,8 +4,7 @@
   "description": "B站课程学习进度计算器",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "parse": "node parse-courses.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "axios": "^1.11.0",
