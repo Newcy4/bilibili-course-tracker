@@ -1,0 +1,16 @@
+{
+  "name": "bilibili-course-tracker",
+  "version": "1.0.0",
+  "description": "B站课程学习进度计算器",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "parse": "node parse-courses.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "keywords": ["bilibili", "course", "tracker"],
+  "author": "",
+  "license": "MIT"
+}

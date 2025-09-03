@@ -1,25 +1,8 @@
 // 课程数据存储
 let coursesData = [];
 
-// 解析时长字符串为分钟数
-function parseDuration(durationStr) {
-    if (!durationStr) return 0;
-    
-    // 移除所有空格和换行符
-    durationStr = durationStr.trim().replace(/\s+/g, '');
-    
-    // 匹配格式：HH:MM:SS 或 MM:SS
-    const timeMatch = durationStr.match(/(\d+):(\d+)(?::(\d+))?/);
-    if (timeMatch) {
-        const hours = timeMatch[3] ? parseInt(timeMatch[1]) : 0;
-        const minutes = timeMatch[3] ? parseInt(timeMatch[2]) : parseInt(timeMatch[1]);
-        const seconds = timeMatch[3] ? parseInt(timeMatch[3]) : parseInt(timeMatch[2]);
-        
-        return hours * 60 + minutes + seconds / 60;
-    }
-    
-    return 0;
-}
+// 本地存储的键名
+const STORAGE_KEY = 'bilibili-course-progress';
 
 // 格式化时长为可读字符串
 function formatDuration(minutes) {
@@ -33,131 +16,104 @@ function formatDuration(minutes) {
     }
 }
 
-// 解析HTML文件中的课程数据
-function parseCourseHTML(htmlContent, courseName) {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlContent, 'text/html');
+// 保存学习进度到本地存储
+function saveProgressToLocal() {
+    const progressData = {};
     
-    const episodes = [];
-    const videoItems = doc.querySelectorAll('.video-pod__item');
-    
-    videoItems.forEach((item, index) => {
-        const titleElement = item.querySelector('.title-txt');
-        const durationElement = item.querySelector('.stat-item.duration');
+    coursesData.forEach((course, courseIndex) => {
+        const input = document.querySelector(`input[data-course-index="${courseIndex}"]`);
+        const watchedEpisodes = parseInt(input.value) || 0;
         
-        if (titleElement && durationElement) {
-            const title = titleElement.textContent.trim();
-            const duration = durationElement.textContent.trim();
-            const durationMinutes = parseDuration(duration);
-            
-            episodes.push({
-                episode: index + 1,
-                title: title,
-                duration: durationMinutes,
-                durationStr: duration
-            });
-        }
+        // 使用课程名称作为键，保存已看集数
+        progressData[course.name] = watchedEpisodes;
     });
     
-    return {
-        name: courseName,
-        episodes: episodes,
-        totalEpisodes: episodes.length,
-        totalDuration: episodes.reduce((sum, ep) => sum + ep.duration, 0)
-    };
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progressData));
+        console.log('学习进度已保存到本地存储');
+    } catch (error) {
+        console.error('保存学习进度失败:', error);
+    }
+}
+
+// 从本地存储加载学习进度
+function loadProgressFromLocal() {
+    try {
+        const savedData = localStorage.getItem(STORAGE_KEY);
+        if (savedData) {
+            const progressData = JSON.parse(savedData);
+            console.log('从本地存储加载学习进度:', progressData);
+            return progressData;
+        }
+    } catch (error) {
+        console.error('加载本地学习进度失败:', error);
+    }
+    return {};
+}
+
+// 清除本地存储的学习进度
+function clearLocalProgress() {
+    try {
+        localStorage.removeItem(STORAGE_KEY);
+        console.log('已清除本地存储的学习进度');
+        
+        // 重置所有输入框
+        document.querySelectorAll('.episode-input').forEach(input => {
+            input.value = '';
+        });
+        
+        // 重新计算进度
+        calculateProgress();
+    } catch (error) {
+        console.error('清除本地存储失败:', error);
+    }
 }
 
 // 加载课程数据
 async function loadCoursesData() {
     try {
-        // 模拟从courses文件夹加载HTML文件
-        // 在实际应用中，这里应该通过服务器端API获取文件内容
-        const courseFiles = [
-            { name: '珠峰vue3课程', file: 'courses/珠峰vue3课程.html' },
-            { name: '禹神vue3课程', file: 'courses/禹神vue3课程.html' }
-        ];
-        
-        coursesData = [];
-        
-        for (const courseFile of courseFiles) {
-            try {
-                const response = await fetch(courseFile.file);
-                if (response.ok) {
-                    const htmlContent = await response.text();
-                    const courseData = parseCourseHTML(htmlContent, courseFile.name);
-                    coursesData.push(courseData);
-                } else {
-                    console.warn(`无法加载课程文件: ${courseFile.file}`);
-                }
-            } catch (error) {
-                console.error(`加载课程文件失败: ${courseFile.file}`, error);
-            }
+        // 尝试加载JSON文件
+        const response = await fetch('courses-data.json');
+        if (response.ok) {
+            coursesData = await response.json();
+            console.log('成功加载课程数据:', coursesData.length, '个课程');
+            
+            // 隐藏加载提示，显示内容
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+            
+            renderCoursesTable();
+            updateSummaryStats();
+            
+            // 加载保存的学习进度
+            loadAndApplyProgress();
+        } else {
+            throw new Error('无法加载课程数据文件');
         }
-        
-        // 如果没有成功加载任何课程，使用示例数据
-        if (coursesData.length === 0) {
-            coursesData = getSampleData();
-        }
-        
-        renderCoursesTable();
-        updateSummaryStats();
-        
     } catch (error) {
         console.error('加载课程数据失败:', error);
-        // 使用示例数据作为后备
-        coursesData = getSampleData();
-        renderCoursesTable();
-        updateSummaryStats();
+        
+        // 显示错误信息
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error').style.display = 'block';
     }
 }
 
-// 获取示例数据（基于实际HTML内容）
-function getSampleData() {
-    const coursesData = [
-        {
-            name: '珠峰vue3课程',
-            episodes: [
-                { episode: 1, title: '01.Vue2&3系统课-课程介绍', duration: 23.17, durationStr: '23:10' },
-                { episode: 2, title: '02.基于传统操作DOM的方式实现计算器', duration: 42.93, durationStr: '42:56' },
-                { episode: 3, title: '03.Vue中的MVVM模式和初步体验', duration: 51.3, durationStr: '51:18' },
-                { episode: 4, title: '04.指定视图容器的N种方案', duration: 40.67, durationStr: '40:40' },
-                { episode: 5, title: '05.为哈要把数据写在data中', duration: 27.8, durationStr: '27:48' },
-                { episode: 6, title: '06.小胡子语法的细节处理', duration: 33.13, durationStr: '33:08' },
-                { episode: 7, title: '07.Object.defineProperty的详细运用', duration: 55.22, durationStr: '55:13' },
-                { episode: 8, title: '08.Vue2响应式数据的细节处理', duration: 106.17, durationStr: '01:46:10' },
-                { episode: 9, title: '09.Vue2响应式源码-数组处理', duration: 41.73, durationStr: '41:44' },
-                { episode: 10, title: '10.Vue2响应式源码-对象的处理', duration: 40.68, durationStr: '40:41' }
-                // 这里只显示前10集作为示例，实际应该有99集
-            ],
-            totalEpisodes: 99,
-            totalDuration: 0 // 将在下面计算
-        },
-        {
-            name: '禹神vue3课程',
-            episodes: [
-                { episode: 1, title: '001.教程简介', duration: 5.33, durationStr: '05:20' },
-                { episode: 2, title: '002.Vue3简介', duration: 2.72, durationStr: '02:43' },
-                { episode: 3, title: '003.创建Vue3工程', duration: 17.02, durationStr: '17:01' },
-                { episode: 4, title: '004.编写App组件', duration: 12.15, durationStr: '12:09' },
-                { episode: 5, title: '005.一个简单的效果', duration: 9.85, durationStr: '09:51' },
-                { episode: 6, title: '006.OptionsAPI 与 CompositionAPI', duration: 7.5, durationStr: '07:30' },
-                { episode: 7, title: '007.setup概述', duration: 12.75, durationStr: '12:45' },
-                { episode: 8, title: '008.setup的返回值', duration: 2.82, durationStr: '02:49' },
-                { episode: 9, title: '009.setup与OptionsAPI', duration: 6.82, durationStr: '06:49' },
-                { episode: 10, title: '010.setup的语法糖', duration: 10.42, durationStr: '10:25' }
-                // 这里只显示前10集作为示例，实际应该有71集
-            ],
-            totalEpisodes: 71,
-            totalDuration: 0 // 将在下面计算
-        }
-    ];
+// 加载并应用保存的学习进度
+function loadAndApplyProgress() {
+    const savedProgress = loadProgressFromLocal();
     
-    // 计算总时长
-    coursesData.forEach(course => {
-        course.totalDuration = course.episodes.reduce((sum, ep) => sum + ep.duration, 0);
+    coursesData.forEach((course, courseIndex) => {
+        const input = document.querySelector(`input[data-course-index="${courseIndex}"]`);
+        const savedEpisodes = savedProgress[course.name];
+        
+        if (savedEpisodes && savedEpisodes > 0) {
+            input.value = savedEpisodes;
+        }
     });
     
-    return coursesData;
+    // 计算并显示进度
+    calculateProgress();
 }
 
 // 渲染课程表格
@@ -231,7 +187,6 @@ function calculateProgress() {
         const row = input.closest('tr');
         const progressTexts = row.querySelectorAll('.progress-text');
         const progressFill = row.querySelector('.progress-fill');
-        const percentageSpan = row.querySelector('.percentage');
         
         // 更新学习时长比例
         progressTexts[0].textContent = `${formatDuration(watchedDuration)} / ${formatDuration(course.totalDuration)}`;
@@ -265,12 +220,140 @@ function calculateProgress() {
 document.addEventListener('DOMContentLoaded', function() {
     loadCoursesData();
     
-    // 为输入框添加实时计算功能
+    // 初始化控制按钮
+    initializeControlButtons();    
+    // 为输入框添加实时计算和保存功能
     document.addEventListener('input', function(e) {
         if (e.target.classList.contains('episode-input')) {
             // 延迟计算，避免频繁计算
             clearTimeout(window.calculateTimeout);
-            window.calculateTimeout = setTimeout(calculateProgress, 300);
+            window.calculateTimeout = setTimeout(() => {
+                calculateProgress();
+                saveProgressToLocal(); // 自动保存到本地存储
+            }, 300);
+        }
+    });
+    
+    // 添加清除按钮事件监听器
+    document.addEventListener('keydown', function(e) {
+        // Ctrl+Shift+C 清除所有进度
+        if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+            if (confirm('确定要清除所有学习进度吗？此操作不可撤销。')) {
+                clearLocalProgress();
+            }
         }
     });
 });
+
+// 导出学习进度为JSON文件
+function exportProgress() {
+    const progressData = {};
+    
+    coursesData.forEach((course, courseIndex) => {
+        const input = document.querySelector(`input[data-course-index="${courseIndex}"]`);
+        const watchedEpisodes = parseInt(input.value) || 0;
+        progressData[course.name] = watchedEpisodes;
+    });
+    
+    // 添加导出时间戳
+    const exportData = {
+        exportTime: new Date().toISOString(),
+        progress: progressData
+    };
+    
+    // 创建下载链接
+    const dataStr = JSON.stringify(exportData, null, 2);
+    const dataBlob = new Blob([dataStr], {type: 'application/json'});
+    const url = URL.createObjectURL(dataBlob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `bilibili-course-progress-${new Date().toISOString().split('T')[0]}.json`;
+    link.click();
+    
+    URL.revokeObjectURL(url);
+    console.log('学习进度已导出');
+}
+
+// 导入学习进度
+function importProgress(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const importData = JSON.parse(e.target.result);
+            let progressData = importData.progress || importData; // 兼容旧格式
+            
+            let importedCount = 0;
+            coursesData.forEach((course, courseIndex) => {
+                const input = document.querySelector(`input[data-course-index="${courseIndex}"]`);
+                const savedEpisodes = progressData[course.name];
+                
+                if (savedEpisodes && savedEpisodes > 0) {
+                    input.value = savedEpisodes;
+                    importedCount++;
+                }
+            });
+            
+            // 重新计算进度并保存
+            calculateProgress();
+            saveProgressToLocal();
+            
+            alert(`成功导入 ${importedCount} 个课程的学习进度！`);
+            console.log('学习进度导入成功:', progressData);
+        } catch (error) {
+            alert('导入失败：文件格式不正确');
+            console.error('导入进度失败:', error);
+        }
+    };
+    
+    reader.readAsText(file);
+    event.target.value = ''; // 清空文件选择
+}
+
+// 添加按钮事件监听器
+function initializeControlButtons() {
+    // 保存按钮
+    document.getElementById('saveProgressBtn').addEventListener('click', function() {
+        saveProgressToLocal();
+        // 显示保存成功提示
+        const btn = this;
+        const originalText = btn.textContent;
+        btn.textContent = '✅ 已保存';
+        btn.style.background = 'linear-gradient(135deg, #2ecc71, #27ae60)';
+        
+        setTimeout(() => {
+            btn.textContent = originalText;
+            btn.style.background = '';
+        }, 2000);
+    });
+    
+    // 清除按钮
+    document.getElementById('clearProgressBtn').addEventListener('click', function() {
+        if (confirm('确定要清除所有学习进度吗？此操作不可撤销。')) {
+            clearLocalProgress();
+            
+            // 显示清除成功提示
+            const btn = this;
+            const originalText = btn.textContent;
+            btn.textContent = '✅ 已清除';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+            }, 2000);
+        }
+    });
+    
+    // 导出按钮
+    document.getElementById('exportProgressBtn').addEventListener('click', exportProgress);
+    
+    // 导入按钮
+    document.getElementById('importProgressBtn').addEventListener('click', function() {
+        document.getElementById('importProgressFile').click();
+    });
+    
+    // 文件选择器
+    document.getElementById('importProgressFile').addEventListener('change', importProgress);
+}

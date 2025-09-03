@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>课程学习进度计算器</title>
+    <title>B站课程学习进度计算器</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
@@ -22,13 +22,13 @@
             max-width: 1200px;
             margin: 0 auto;
             background: white;
-            border-radius: 15px;
+            border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             overflow: hidden;
         }
 
         .header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
             color: white;
             padding: 30px;
             text-align: center;
@@ -37,7 +37,7 @@
         .header h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
-            font-weight: 300;
+            font-weight: 700;
         }
 
         .header p {
@@ -45,70 +45,69 @@
             opacity: 0.9;
         }
 
-        .content {
-            padding: 30px;
-        }
-
-        .progress-summary {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .progress-summary h3 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 1.3em;
-        }
-
-        .summary-stats {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
         }
 
-        .stat-item {
+        .stat-card {
             background: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            min-width: 150px;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
         }
 
         .stat-number {
-            font-size: 2em;
+            font-size: 2.5em;
             font-weight: bold;
-            color: #4facfe;
+            color: #667eea;
+            margin-bottom: 10px;
         }
 
         .stat-label {
             color: #666;
-            font-size: 0.9em;
-            margin-top: 5px;
+            font-size: 1em;
+        }
+
+        .progress-section {
+            padding: 30px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
         }
 
         .courses-table {
             width: 100%;
             border-collapse: collapse;
             background: white;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
 
         .courses-table th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 15px;
+            padding: 20px;
             text-align: left;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .courses-table td {
-            padding: 15px;
+            padding: 20px;
             border-bottom: 1px solid #eee;
         }
 
@@ -117,36 +116,38 @@
         }
 
         .course-name {
-            font-weight: 500;
+            font-weight: 600;
             color: #333;
+            font-size: 1.1em;
         }
 
         .episode-input {
             width: 80px;
-            padding: 8px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
             text-align: center;
-            font-size: 14px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
         }
 
         .episode-input:focus {
             outline: none;
-            border-color: #4facfe;
+            border-color: #667eea;
         }
 
         .progress-bar {
             width: 100%;
             height: 20px;
-            background: #e9ecef;
+            background: #e0e0e0;
             border-radius: 10px;
             overflow: hidden;
-            margin: 5px 0;
+            margin-bottom: 10px;
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(90deg, #667eea, #764ba2);
             transition: width 0.3s ease;
             border-radius: 10px;
         }
@@ -154,57 +155,109 @@
         .progress-text {
             font-size: 0.9em;
             color: #666;
-            margin-top: 5px;
+            margin-bottom: 5px;
         }
 
-        .percentage {
+        .overall-progress {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .overall-progress h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .overall-progress .progress-number {
+            font-size: 3em;
             font-weight: bold;
-            color: #4facfe;
+            margin-bottom: 10px;
         }
 
-        .calculate-btn {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+
+        .error {
+            text-align: center;
+            padding: 50px;
+            color: #e74c3c;
+        }
+
+        .progress-controls {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .control-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
             border: none;
-            padding: 15px 30px;
+            padding: 12px 24px;
+            margin: 0 8px;
             border-radius: 25px;
-            font-size: 1.1em;
+            font-size: 0.9em;
+            font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s ease;
-            margin: 20px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
 
-        .calculate-btn:hover {
+        .control-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
         }
 
-        .no-progress {
-            color: #999;
-            font-style: italic;
+        .save-btn {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
         }
 
+        .clear-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .export-btn {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+
+        .import-btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        .save-btn:hover {
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+        }
+
+        .clear-btn:hover {
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+        }
+
+        .export-btn:hover {
+            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
+        }
+
+        .import-btn:hover {
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
-                border-radius: 10px;
-            }
-            
-            .header {
-                padding: 20px;
+                border-radius: 15px;
             }
             
             .header h1 {
                 font-size: 2em;
             }
             
-            .content {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
                 padding: 20px;
-            }
-            
-            .summary-stats {
-                flex-direction: column;
-                align-items: center;
             }
             
             .courses-table {
@@ -213,7 +266,7 @@
             
             .courses-table th,
             .courses-table td {
-                padding: 10px 8px;
+                padding: 15px 10px;
             }
         }
     </style>
@@ -221,49 +274,66 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📚 课程学习进度计算器</h1>
-            <p>输入你当前学习的集数，自动计算学习进度</p>
+            <h1>📚 B站课程学习进度计算器</h1>
+            <p>轻松追踪你的学习进度，科学规划学习时间</p>
         </div>
-        
-        <div class="content">
-            <div class="progress-summary">
-                <h3>📊 总体学习进度</h3>
-                <div class="summary-stats">
-                    <div class="stat-item">
-                        <div class="stat-number" id="totalCourses">0</div>
-                        <div class="stat-label">总课程数</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="totalEpisodes">0</div>
-                        <div class="stat-label">总集数</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="totalDuration">0小时</div>
-                        <div class="stat-label">总时长</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" id="overallProgress">0%</div>
-                        <div class="stat-label">总体进度</div>
-                    </div>
+
+        <div id="loading" class="loading">
+            <h2>正在加载课程数据...</h2>
+            <p>请稍候</p>
+        </div>
+
+        <div id="error" class="error" style="display: none;">
+            <h2>加载失败</h2>
+            <p>无法加载课程数据，请检查 courses-data.json 文件是否存在</p>
+        </div>
+
+        <div id="content" style="display: none;">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalCourses">0</div>
+                    <div class="stat-label">总课程数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalEpisodes">0</div>
+                    <div class="stat-label">总集数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="totalDuration">0小时</div>
+                    <div class="stat-label">总时长</div>
                 </div>
             </div>
 
-            <button class="calculate-btn" onclick="calculateProgress()">🔄 计算学习进度</button>
-
-            <table class="courses-table">
-                <thead>
-                    <tr>
-                        <th>课程名称</th>
-                        <th>当前集数</th>
-                        <th>学习时长比例</th>
-                        <th>学习进度</th>
-                        <th>进度百分比</th>
-                    </tr>
-                </thead>
-                <tbody id="coursesTableBody">
-                    <!-- 课程数据将通过JavaScript动态生成 -->
-                </tbody>
-            </table>
+            <div class="progress-section">
+                <h2 class="section-title">📊 学习进度追踪</h2>
+                <table class="courses-table">
+                    <thead>
+                        <tr>
+                            <th>课程名称</th>
+                            <th>已看集数</th>
+                            <th>学习时长</th>
+                            <th>学习进度</th>
+                            <th>完成度</th>
+                        </tr>
+                    </thead>
+                    <tbody id="coursesTableBody">
+                        <!-- 课程数据将在这里动态生成 -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="progress-controls">
+                <button id="saveProgressBtn" class="control-btn save-btn">💾 保存进度</button>
+                <button id="clearProgressBtn" class="control-btn clear-btn">🗑️ 清除进度</button>
+                <button id="exportProgressBtn" class="control-btn export-btn">📥 导出进度</button>
+                <button id="importProgressBtn" class="control-btn import-btn">📤 导入进度</button>
+                <input type="file" id="importProgressFile" accept=".json" style="display: none;">
+            </div>
+            <div class="overall-progress">
+                <h2>🎯 总体学习进度</h2>
+                <div class="progress-number" id="overallProgress">0%</div>
+                <p>基于学习时长的综合进度</p>
+            </div>
         </div>
     </div>
 

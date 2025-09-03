@@ -1,0 +1,1036 @@
+[
+  {
+    "name": "珠峰vue3课程",
+    "episodes": [
+      {
+        "episode": 1,
+        "title": "01.Vue2&amp;3系统课-课程介绍",
+        "duration": 23.166666666666668,
+        "durationStr": "23:10"
+      },
+      {
+        "episode": 2,
+        "title": "02.基于传统操作DOM的方式实现计算器",
+        "duration": 42.93333333333333,
+        "durationStr": "42:56"
+      },
+      {
+        "episode": 3,
+        "title": "03.Vue中的MVVM模式和初步体验",
+        "duration": 51.3,
+        "durationStr": "51:18"
+      },
+      {
+        "episode": 4,
+        "title": "04.指定视图容器的N种方案",
+        "duration": 40.666666666666664,
+        "durationStr": "40:40"
+      },
+      {
+        "episode": 5,
+        "title": "05.为哈要把数据写在data中",
+        "duration": 27.8,
+        "durationStr": "27:48"
+      },
+      {
+        "episode": 6,
+        "title": "06.小胡子语法的细节处理",
+        "duration": 33.13333333333333,
+        "durationStr": "33:08"
+      },
+      {
+        "episode": 7,
+        "title": "07.Object.defineProperty的详细运用",
+        "duration": 55.21666666666667,
+        "durationStr": "55:13"
+      },
+      {
+        "episode": 8,
+        "title": "08.Vue2响应式数据的细节处理",
+        "duration": 106.16666666666667,
+        "durationStr": "01:46:10"
+      },
+      {
+        "episode": 9,
+        "title": "09.Vue2响应式源码-数组处理",
+        "duration": 41.733333333333334,
+        "durationStr": "41:44"
+      },
+      {
+        "episode": 10,
+        "title": "10.Vue2响应式源码-对象的处理",
+        "duration": 40.68333333333333,
+        "durationStr": "40:41"
+      },
+      {
+        "episode": 11,
+        "title": "11.Vue视图中的各种指令",
+        "duration": 86.23333333333333,
+        "durationStr": "01:26:14"
+      },
+      {
+        "episode": 12,
+        "title": "12.v-on指令和其编译原理",
+        "duration": 118.91666666666667,
+        "durationStr": "01:58:55"
+      },
+      {
+        "episode": 13,
+        "title": "13.v-bind和v-model指令及其编译原理",
+        "duration": 40.333333333333336,
+        "durationStr": "40:20"
+      },
+      {
+        "episode": 14,
+        "title": "14.Vue中各表单项的处理技巧",
+        "duration": 87.58333333333333,
+        "durationStr": "01:27:35"
+      },
+      {
+        "episode": 15,
+        "title": "15.Vue中三个渲染优化的指令",
+        "duration": 40.88333333333333,
+        "durationStr": "40:53"
+      },
+      {
+        "episode": 16,
+        "title": "16.computed计算属性的应用和原理",
+        "duration": 104.5,
+        "durationStr": "01:44:30"
+      },
+      {
+        "episode": 17,
+        "title": "17.watch监听器的应用和原理",
+        "duration": 78.25,
+        "durationStr": "01:18:15"
+      },
+      {
+        "episode": 18,
+        "title": "18.filters没啥用的过滤器",
+        "duration": 55.31666666666667,
+        "durationStr": "55:19"
+      },
+      {
+        "episode": 19,
+        "title": "19.基于compose实现函数调用的扁平化处理",
+        "duration": 62.13333333333333,
+        "durationStr": "01:02:08"
+      },
+      {
+        "episode": 20,
+        "title": "20.关于class和style的动态绑定",
+        "duration": 49.5,
+        "durationStr": "49:30"
+      },
+      {
+        "episode": 21,
+        "title": "21.Vue2中的钩子函数及应用",
+        "duration": 110.58333333333333,
+        "durationStr": "01:50:35"
+      },
+      {
+        "episode": 22,
+        "title": "22.状态异步更新和$nextTick原理",
+        "duration": 49.7,
+        "durationStr": "49:42"
+      },
+      {
+        "episode": 23,
+        "title": "23.vue-cli的安装和项目创建",
+        "duration": 31.466666666666665,
+        "durationStr": "31:28"
+      },
+      {
+        "episode": 24,
+        "title": "24.脚手架创建项目的大体梳理",
+        "duration": 48.06666666666667,
+        "durationStr": "48:04"
+      },
+      {
+        "episode": 25,
+        "title": "25.脚手架的基本配置更改",
+        "duration": 67.53333333333333,
+        "durationStr": "01:07:32"
+      },
+      {
+        "episode": 26,
+        "title": "26.脚手架的进阶配置处理",
+        "duration": 46.55,
+        "durationStr": "46:33"
+      },
+      {
+        "episode": 27,
+        "title": "27.脚手架的跨域处理",
+        "duration": 33.733333333333334,
+        "durationStr": "33:44"
+      },
+      {
+        "episode": 28,
+        "title": "28.脚手架的兼容处理",
+        "duration": 43.416666666666664,
+        "durationStr": "43:25"
+      },
+      {
+        "episode": 29,
+        "title": "29.Vue中的单文件组件系统",
+        "duration": 50.733333333333334,
+        "durationStr": "50:44"
+      },
+      {
+        "episode": 30,
+        "title": "30.Vue2组件的划分和特性",
+        "duration": 50.416666666666664,
+        "durationStr": "50:25"
+      },
+      {
+        "episode": 31,
+        "title": "31.Vue中的动态组件管理",
+        "duration": 59.1,
+        "durationStr": "59:06"
+      },
+      {
+        "episode": 32,
+        "title": "32.props属性的详细处理1",
+        "duration": 50.46666666666667,
+        "durationStr": "50:28"
+      },
+      {
+        "episode": 33,
+        "title": "33.props属性的规则校验和意义",
+        "duration": 54.2,
+        "durationStr": "54:12"
+      },
+      {
+        "episode": 34,
+        "title": "34.slot插槽的全系列知识",
+        "duration": 69,
+        "durationStr": "01:09:00"
+      },
+      {
+        "episode": 35,
+        "title": "35.自定义事件的基本流程",
+        "duration": 31.25,
+        "durationStr": "31:15"
+      },
+      {
+        "episode": 36,
+        "title": "36.自定义事件的进阶处理",
+        "duration": 71.6,
+        "durationStr": "01:11:36"
+      },
+      {
+        "episode": 37,
+        "title": "37.ref基础知识及其应用",
+        "duration": 38.266666666666666,
+        "durationStr": "38:16"
+      },
+      {
+        "episode": 38,
+        "title": "38.ElementUI的初步使用(整体介绍)",
+        "duration": 73.76666666666667,
+        "durationStr": "01:13:46"
+      },
+      {
+        "episode": 39,
+        "title": "39.Vue组件样式私有化原理",
+        "duration": 53.75,
+        "durationStr": "53:45"
+      },
+      {
+        "episode": 40,
+        "title": "40.Vote组件的结构和样式",
+        "duration": 18.716666666666665,
+        "durationStr": "18:43"
+      },
+      {
+        "episode": 41,
+        "title": "41.父子组件通信的三大思想",
+        "duration": 63.63333333333333,
+        "durationStr": "01:03:38"
+      },
+      {
+        "episode": 42,
+        "title": "42.基于上下文实现祖先和后代的通信",
+        "duration": 47.5,
+        "durationStr": "47:30"
+      },
+      {
+        "episode": 43,
+        "title": "43.EventBus事件总线处理",
+        "duration": 60.43333333333333,
+        "durationStr": "01:00:26"
+      },
+      {
+        "episode": 44,
+        "title": "44.TASKOA之Table表格的处理",
+        "duration": 103.1,
+        "durationStr": "01:43:06"
+      },
+      {
+        "episode": 45,
+        "title": "45.TASKOA之Form表单的处理",
+        "duration": 98.38333333333334,
+        "durationStr": "01:38:23"
+      },
+      {
+        "episode": 46,
+        "title": "46.TASKOA之数据展示和切换",
+        "duration": 44.75,
+        "durationStr": "44:45"
+      },
+      {
+        "episode": 47,
+        "title": "47.TASKOA之任务的增删改操作",
+        "duration": 26.866666666666667,
+        "durationStr": "26:52"
+      },
+      {
+        "episode": 48,
+        "title": "48.TASKOA之项目优化处理",
+        "duration": 43.46666666666667,
+        "durationStr": "43:28"
+      },
+      {
+        "episode": 49,
+        "title": "49.组件封装-整体处理思想",
+        "duration": 22.316666666666666,
+        "durationStr": "22:19"
+      },
+      {
+        "episode": 50,
+        "title": "50.组件封装-封装ButtonAgain处理点击防抖",
+        "duration": 67.56666666666666,
+        "durationStr": "01:07:34"
+      },
+      {
+        "episode": 51,
+        "title": "51.组件封装-基于JSX语法的封装",
+        "duration": 77.33333333333333,
+        "durationStr": "01:17:20"
+      },
+      {
+        "episode": 52,
+        "title": "52.组件封装-基于Vue.extend进行封装调用",
+        "duration": 63.266666666666666,
+        "durationStr": "01:03:16"
+      },
+      {
+        "episode": 53,
+        "title": "53.三小时掌握vuex的运用",
+        "duration": 168.31666666666666,
+        "durationStr": "02:48:19"
+      },
+      {
+        "episode": 54,
+        "title": "54.vuex中的模块化管理",
+        "duration": 107.81666666666666,
+        "durationStr": "01:47:49"
+      },
+      {
+        "episode": 55,
+        "title": "55.面试题之TodoList的实现",
+        "duration": 80.71666666666667,
+        "durationStr": "01:20:43"
+      },
+      {
+        "episode": 56,
+        "title": "56.Vuex源码分析「简易版」",
+        "duration": 156.76666666666668,
+        "durationStr": "02:36:46"
+      },
+      {
+        "episode": 57,
+        "title": "57.基于vuex优化TASK-OA案例",
+        "duration": 83.51666666666667,
+        "durationStr": "01:23:31"
+      },
+      {
+        "episode": 58,
+        "title": "58.基于vuex优化TodoList案例",
+        "duration": 48.15,
+        "durationStr": "48:09"
+      },
+      {
+        "episode": 59,
+        "title": "59.SPA和MPA的区别",
+        "duration": 44.4,
+        "durationStr": "44:24"
+      },
+      {
+        "episode": 60,
+        "title": "60.Hash哈希路由的底层机制",
+        "duration": 24.183333333333334,
+        "durationStr": "24:11"
+      },
+      {
+        "episode": 61,
+        "title": "61.History路由的底层机制",
+        "duration": 44.45,
+        "durationStr": "44:27"
+      },
+      {
+        "episode": 62,
+        "title": "62.VueRouter的基础使用",
+        "duration": 42.53333333333333,
+        "durationStr": "42:32"
+      },
+      {
+        "episode": 63,
+        "title": "63.VueRouter的基础使用2",
+        "duration": 55.05,
+        "durationStr": "55:03"
+      },
+      {
+        "episode": 64,
+        "title": "64.RouterLink组件的详细运用",
+        "duration": 57.38333333333333,
+        "durationStr": "57:23"
+      },
+      {
+        "episode": 65,
+        "title": "65.$router和$route的详细运用",
+        "duration": 23.666666666666668,
+        "durationStr": "23:40"
+      },
+      {
+        "episode": 66,
+        "title": "66.路由跳转传参的N种方案",
+        "duration": 40.13333333333333,
+        "durationStr": "40:08"
+      },
+      {
+        "episode": 67,
+        "title": "67.多级路由管理方案",
+        "duration": 41.55,
+        "durationStr": "41:33"
+      },
+      {
+        "episode": 68,
+        "title": "68.必做优化之路由懒加载",
+        "duration": 65.91666666666667,
+        "durationStr": "01:05:55"
+      },
+      {
+        "episode": 69,
+        "title": "69.路由的导航守卫函数",
+        "duration": 93.65,
+        "durationStr": "01:33:39"
+      },
+      {
+        "episode": 70,
+        "title": "70.商城App-搭建项目基本框架",
+        "duration": 100.78333333333333,
+        "durationStr": "01:40:47"
+      },
+      {
+        "episode": 71,
+        "title": "71.商城App-vuex和vueRouter的基本配置",
+        "duration": 55.86666666666667,
+        "durationStr": "55:52"
+      },
+      {
+        "episode": 72,
+        "title": "72.商城App-NavBar的二次封装",
+        "duration": 101.93333333333334,
+        "durationStr": "01:41:56"
+      },
+      {
+        "episode": 73,
+        "title": "73.商城App-TabBar的二次封装",
+        "duration": 62.95,
+        "durationStr": "01:02:57"
+      },
+      {
+        "episode": 74,
+        "title": "74.商城App-首页头部的吸顶效果",
+        "duration": 83.83333333333333,
+        "durationStr": "01:23:50"
+      },
+      {
+        "episode": 75,
+        "title": "75.商城App-首页的结构和样式",
+        "duration": 74.8,
+        "durationStr": "01:14:48"
+      },
+      {
+        "episode": 76,
+        "title": "76.商城App-首页的数据绑定",
+        "duration": 90.7,
+        "durationStr": "01:30:42"
+      },
+      {
+        "episode": 77,
+        "title": "77.商城App-分类页的功能开发",
+        "duration": 107.41666666666667,
+        "durationStr": "01:47:25"
+      },
+      {
+        "episode": 78,
+        "title": "78.商城App-搜索页的主要功能开发",
+        "duration": 179.26666666666668,
+        "durationStr": "02:59:16"
+      },
+      {
+        "episode": 79,
+        "title": "79.商城App-加载更多及全局提示封装",
+        "duration": 59.03333333333333,
+        "durationStr": "59:02"
+      },
+      {
+        "episode": 80,
+        "title": "80.商城App-登录页的基本工功能",
+        "duration": 103,
+        "durationStr": "01:43:00"
+      },
+      {
+        "episode": 81,
+        "title": "81.商城App-关于登录态校验及跳转细节分析",
+        "duration": 55.15,
+        "durationStr": "55:09"
+      },
+      {
+        "episode": 82,
+        "title": "82.商城App-登录态校验的具体实现",
+        "duration": 56.1,
+        "durationStr": "56:06"
+      },
+      {
+        "episode": 83,
+        "title": "83.商城App-产品详情的绑定",
+        "duration": 49.93333333333333,
+        "durationStr": "49:56"
+      },
+      {
+        "episode": 84,
+        "title": "84.商城App-KeepAlive缓存的动态管理",
+        "duration": 79.25,
+        "durationStr": "01:19:15"
+      },
+      {
+        "episode": 85,
+        "title": "85.商城App-项目的总结沉淀",
+        "duration": 44.05,
+        "durationStr": "44:03"
+      },
+      {
+        "episode": 86,
+        "title": "86.商城App-购物车信息的管理",
+        "duration": 167.5,
+        "durationStr": "02:47:30"
+      },
+      {
+        "episode": 87,
+        "title": "87.商城App-全选及购物车细节处理",
+        "duration": 72.96666666666667,
+        "durationStr": "01:12:58"
+      },
+      {
+        "episode": 88,
+        "title": "88.vite的核心实现原理",
+        "duration": 107.08333333333333,
+        "durationStr": "01:47:05"
+      },
+      {
+        "episode": 89,
+        "title": "89.vite的各种配置规则",
+        "duration": 64.55,
+        "durationStr": "01:04:33"
+      },
+      {
+        "episode": 90,
+        "title": "90.Vue3和Vue2的十大区别",
+        "duration": 82.78333333333333,
+        "durationStr": "01:22:47"
+      },
+      {
+        "episode": 91,
+        "title": "91.Vue3的响应式原理",
+        "duration": 96.95,
+        "durationStr": "01:36:57"
+      },
+      {
+        "episode": 92,
+        "title": "92.Vue3框架中使用Vue2语法需要注意的事项",
+        "duration": 62.733333333333334,
+        "durationStr": "01:02:44"
+      },
+      {
+        "episode": 93,
+        "title": "93.Vue3中的响应式系统API",
+        "duration": 110.98333333333333,
+        "durationStr": "01:50:59"
+      },
+      {
+        "episode": 94,
+        "title": "94.Vue3中的 script setup 脚本模式",
+        "duration": 65.7,
+        "durationStr": "01:05:42"
+      },
+      {
+        "episode": 95,
+        "title": "95.Vue3中的 script setup 进阶处理",
+        "duration": 89.25,
+        "durationStr": "01:29:15"
+      },
+      {
+        "episode": 96,
+        "title": "96.Vuex4和VueRouter4的使用",
+        "duration": 68.11666666666666,
+        "durationStr": "01:08:07"
+      },
+      {
+        "episode": 97,
+        "title": "97.基于Vue3重构TodoList案例",
+        "duration": 74.11666666666666,
+        "durationStr": "01:14:07"
+      },
+      {
+        "episode": 98,
+        "title": "98.物美系统-从零开始搭建项目",
+        "duration": 86.31666666666666,
+        "durationStr": "01:26:19"
+      },
+      {
+        "episode": 99,
+        "title": "99.物美系统-路由体系的构建",
+        "duration": 114.41666666666667,
+        "durationStr": "01:54:25"
+      }
+    ],
+    "totalEpisodes": 99,
+    "totalDuration": 6703.116666666669
+  },
+  {
+    "name": "禹神vue3课程",
+    "episodes": [
+      {
+        "episode": 1,
+        "title": "001.教程简介",
+        "duration": 5.333333333333333,
+        "durationStr": "05:20"
+      },
+      {
+        "episode": 2,
+        "title": "002.Vue3简介",
+        "duration": 2.716666666666667,
+        "durationStr": "02:43"
+      },
+      {
+        "episode": 3,
+        "title": "003.创建Vue3工程",
+        "duration": 17.016666666666666,
+        "durationStr": "17:01"
+      },
+      {
+        "episode": 4,
+        "title": "004.编写App组件",
+        "duration": 12.15,
+        "durationStr": "12:09"
+      },
+      {
+        "episode": 5,
+        "title": "005.一个简单的效果",
+        "duration": 9.85,
+        "durationStr": "09:51"
+      },
+      {
+        "episode": 6,
+        "title": "006.OptionsAPI 与 CompositionAPI",
+        "duration": 7.5,
+        "durationStr": "07:30"
+      },
+      {
+        "episode": 7,
+        "title": "007.setup概述",
+        "duration": 12.75,
+        "durationStr": "12:45"
+      },
+      {
+        "episode": 8,
+        "title": "008.setup的返回值",
+        "duration": 2.8166666666666664,
+        "durationStr": "02:49"
+      },
+      {
+        "episode": 9,
+        "title": "009.setup与OptionsAPI",
+        "duration": 6.816666666666666,
+        "durationStr": "06:49"
+      },
+      {
+        "episode": 10,
+        "title": "010.setup的语法糖",
+        "duration": 10.416666666666666,
+        "durationStr": "10:25"
+      },
+      {
+        "episode": 11,
+        "title": "011.ref创建_基本类型的响应式数据",
+        "duration": 9.466666666666667,
+        "durationStr": "09:28"
+      },
+      {
+        "episode": 12,
+        "title": "012.reactive创建_对象类型的响应式数据",
+        "duration": 13.416666666666666,
+        "durationStr": "13:25"
+      },
+      {
+        "episode": 13,
+        "title": "013.ref创建_对象类型的响应式数据",
+        "duration": 8.933333333333334,
+        "durationStr": "08:56"
+      },
+      {
+        "episode": 14,
+        "title": "014.ref对比reactive",
+        "duration": 16.433333333333334,
+        "durationStr": "16:26"
+      },
+      {
+        "episode": 15,
+        "title": "015.toRefs与toRef",
+        "duration": 14.283333333333333,
+        "durationStr": "14:17"
+      },
+      {
+        "episode": 16,
+        "title": "016.computed计算属性",
+        "duration": 19.183333333333334,
+        "durationStr": "19:11"
+      },
+      {
+        "episode": 17,
+        "title": "017.watch监视_情况一",
+        "duration": 11.266666666666667,
+        "durationStr": "11:16"
+      },
+      {
+        "episode": 18,
+        "title": "018.watch监视_情况二",
+        "duration": 13.683333333333334,
+        "durationStr": "13:41"
+      },
+      {
+        "episode": 19,
+        "title": "019.watch监视_情况三",
+        "duration": 11.85,
+        "durationStr": "11:51"
+      },
+      {
+        "episode": 20,
+        "title": "020.watch监视_情况四",
+        "duration": 19.916666666666668,
+        "durationStr": "19:55"
+      },
+      {
+        "episode": 21,
+        "title": "021.watch监视_情况五",
+        "duration": 5.016666666666667,
+        "durationStr": "05:01"
+      },
+      {
+        "episode": 22,
+        "title": "022.watchEffect",
+        "duration": 14.183333333333334,
+        "durationStr": "14:11"
+      },
+      {
+        "episode": 23,
+        "title": "023.标签的ref属性",
+        "duration": 14.566666666666666,
+        "durationStr": "14:34"
+      },
+      {
+        "episode": 24,
+        "title": "024.回顾TS中的_接口_泛型_自定义类型",
+        "duration": 14.516666666666667,
+        "durationStr": "14:31"
+      },
+      {
+        "episode": 25,
+        "title": "025.props的使用",
+        "duration": 26.666666666666668,
+        "durationStr": "26:40"
+      },
+      {
+        "episode": 26,
+        "title": "026.对生命周期的理解",
+        "duration": 4.066666666666666,
+        "durationStr": "04:04"
+      },
+      {
+        "episode": 27,
+        "title": "027.Vue2的生命周期",
+        "duration": 19.483333333333334,
+        "durationStr": "19:29"
+      },
+      {
+        "episode": 28,
+        "title": "028.Vue3的生命周期",
+        "duration": 12.833333333333334,
+        "durationStr": "12:50"
+      },
+      {
+        "episode": 29,
+        "title": "029.自定义Hooks",
+        "duration": 22.166666666666668,
+        "durationStr": "22:10"
+      },
+      {
+        "episode": 30,
+        "title": "030.对路由的理解",
+        "duration": 6.066666666666666,
+        "durationStr": "06:04"
+      },
+      {
+        "episode": 31,
+        "title": "031.路由_基本切换效果",
+        "duration": 26.716666666666665,
+        "durationStr": "26:43"
+      },
+      {
+        "episode": 32,
+        "title": "032.路由_两个注意点",
+        "duration": 8.683333333333334,
+        "durationStr": "08:41"
+      },
+      {
+        "episode": 33,
+        "title": "033.路由_路由器工作模式",
+        "duration": 6.716666666666667,
+        "durationStr": "06:43"
+      },
+      {
+        "episode": 34,
+        "title": "034.路由_to的两种写法",
+        "duration": 2,
+        "durationStr": "02:00"
+      },
+      {
+        "episode": 35,
+        "title": "035.路由_命名路由",
+        "duration": 3.216666666666667,
+        "durationStr": "03:13"
+      },
+      {
+        "episode": 36,
+        "title": "036.路由_嵌套路由",
+        "duration": 10.166666666666666,
+        "durationStr": "10:10"
+      },
+      {
+        "episode": 37,
+        "title": "037.路由_query参数",
+        "duration": 16.483333333333334,
+        "durationStr": "16:29"
+      },
+      {
+        "episode": 38,
+        "title": "038.路由_params参数",
+        "duration": 10.983333333333333,
+        "durationStr": "10:59"
+      },
+      {
+        "episode": 39,
+        "title": "039.路由_props配置",
+        "duration": 12.566666666666666,
+        "durationStr": "12:34"
+      },
+      {
+        "episode": 40,
+        "title": "040.路由_replace属性",
+        "duration": 4.166666666666667,
+        "durationStr": "04:10"
+      },
+      {
+        "episode": 41,
+        "title": "041.路由_编程式路由导航",
+        "duration": 13.15,
+        "durationStr": "13:09"
+      },
+      {
+        "episode": 42,
+        "title": "042.路由_重定向",
+        "duration": 1.75,
+        "durationStr": "01:45"
+      },
+      {
+        "episode": 43,
+        "title": "043.对Pinia的理解",
+        "duration": 3.8666666666666667,
+        "durationStr": "03:52"
+      },
+      {
+        "episode": 44,
+        "title": "044.准备一个效果",
+        "duration": 18.016666666666666,
+        "durationStr": "18:01"
+      },
+      {
+        "episode": 45,
+        "title": "045.搭建pinia环境",
+        "duration": 3.2,
+        "durationStr": "03:12"
+      },
+      {
+        "episode": 46,
+        "title": "046.存储+读取数据",
+        "duration": 16.7,
+        "durationStr": "16:42"
+      },
+      {
+        "episode": 47,
+        "title": "047.修改数据(三种方式)",
+        "duration": 14.683333333333334,
+        "durationStr": "14:41"
+      },
+      {
+        "episode": 48,
+        "title": "048.storeToRefs",
+        "duration": 7.516666666666667,
+        "durationStr": "07:31"
+      },
+      {
+        "episode": 49,
+        "title": "049.getters的使用",
+        "duration": 4.583333333333333,
+        "durationStr": "04:35"
+      },
+      {
+        "episode": 50,
+        "title": "050.$subscribe的使用",
+        "duration": 6.5,
+        "durationStr": "06:30"
+      },
+      {
+        "episode": 51,
+        "title": "051.store组合式写法",
+        "duration": 3.7333333333333334,
+        "durationStr": "03:44"
+      },
+      {
+        "episode": 52,
+        "title": "052.组件通信_方式1_props",
+        "duration": 14.983333333333333,
+        "durationStr": "14:59"
+      },
+      {
+        "episode": 53,
+        "title": "053.组件通信_方式2_自定义事件",
+        "duration": 16.1,
+        "durationStr": "16:06"
+      },
+      {
+        "episode": 54,
+        "title": "054.组件通信_方式3_mitt",
+        "duration": 17.633333333333333,
+        "durationStr": "17:38"
+      },
+      {
+        "episode": 55,
+        "title": "055.组件通信_方式4_v-model",
+        "duration": 21.783333333333335,
+        "durationStr": "21:47"
+      },
+      {
+        "episode": 56,
+        "title": "056.组件通信_v-model的细节",
+        "duration": 5.85,
+        "durationStr": "05:51"
+      },
+      {
+        "episode": 57,
+        "title": "057.组件通信_方式5_$attrs",
+        "duration": 14.166666666666666,
+        "durationStr": "14:10"
+      },
+      {
+        "episode": 58,
+        "title": "058.组件通信_方式6_$refs与$parent",
+        "duration": 22.166666666666668,
+        "durationStr": "22:10"
+      },
+      {
+        "episode": 59,
+        "title": "059.一个注意点",
+        "duration": 3.066666666666667,
+        "durationStr": "03:04"
+      },
+      {
+        "episode": 60,
+        "title": "060.组件通信_方式7_provide_inject",
+        "duration": 15.966666666666667,
+        "durationStr": "15:58"
+      },
+      {
+        "episode": 61,
+        "title": "061.插槽_默认插槽",
+        "duration": 19.316666666666666,
+        "durationStr": "19:19"
+      },
+      {
+        "episode": 62,
+        "title": "062.插槽_具名插槽",
+        "duration": 8.966666666666667,
+        "durationStr": "08:58"
+      },
+      {
+        "episode": 63,
+        "title": "063.插槽_作用域插槽",
+        "duration": 19.066666666666666,
+        "durationStr": "19:04"
+      },
+      {
+        "episode": 64,
+        "title": "064.shallowRef 与 shallowReactive",
+        "duration": 16.233333333333334,
+        "durationStr": "16:14"
+      },
+      {
+        "episode": 65,
+        "title": "065.readonly 与 shallowReadonly",
+        "duration": 12.216666666666667,
+        "durationStr": "12:13"
+      },
+      {
+        "episode": 66,
+        "title": "066.toRaw与markRaw",
+        "duration": 18.65,
+        "durationStr": "18:39"
+      },
+      {
+        "episode": 67,
+        "title": "067.customRef的使用",
+        "duration": 23.65,
+        "durationStr": "23:39"
+      },
+      {
+        "episode": 68,
+        "title": "068.Teleport",
+        "duration": 17.016666666666666,
+        "durationStr": "17:01"
+      },
+      {
+        "episode": 69,
+        "title": "069.Suspense",
+        "duration": 10.383333333333333,
+        "durationStr": "10:23"
+      },
+      {
+        "episode": 70,
+        "title": "070.全局API转移到应用对象",
+        "duration": 8.383333333333333,
+        "durationStr": "08:23"
+      },
+      {
+        "episode": 71,
+        "title": "071.Vue3的非兼容性改变",
+        "duration": 3.1333333333333333,
+        "durationStr": "03:08"
+      }
+    ],
+    "totalEpisodes": 71,
+    "totalDuration": 849.5000000000001
+  }
+]
