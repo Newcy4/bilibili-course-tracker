@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('.'));
 
 // B站代理API端点
-app.post('/api/bilibili', async (req, res) => {
+app.post('/bilibili', async (req, res) => {
     try {
         console.log("req",req.body)
         const courseIdArr = Array.isArray(req.body.courseIdArr) ? req.body.courseIdArr : JSON.parse(req.body.courseIdArr);

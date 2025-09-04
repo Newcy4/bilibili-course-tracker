@@ -14,5 +14,3 @@ build/
 # Dependency directories
 node_modules/
 
-nginx.conf
-deploy.sh

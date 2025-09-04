@@ -133,7 +133,9 @@ async function loadCoursesFromBilibili() {
         return;
     }
     try {
-        const response = await fetch('http://localhost:8000/api/bilibili', {
+        let devUrl = 'http://localhost:8000/bilibili'  // 本地开发环境
+        let url = 'http://域名/api/bilibili'  // 这里带了 api 是因为服务端用了 nginx 进行反向代理
+        const response = await fetch(devUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
