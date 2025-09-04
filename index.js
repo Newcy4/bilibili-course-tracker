@@ -72,35 +72,35 @@ function clearLocalProgress() {
     }
 }
 
-// 加载课程数据
-async function loadCoursesData() {
-    try {
-        // 尝试加载JSON文件
-        const response = await fetch('courses-data.json');
-        if (response.ok) {
-            coursesData = await response.json();
-            console.log('成功加载课程数据:', coursesData.length, '个课程');
+// // 加载课程数据
+// async function loadCoursesData() {
+//     try {
+//         // 尝试加载JSON文件
+//         const response = await fetch('courses-data.json');
+//         if (response.ok) {
+//             coursesData = await response.json();
+//             console.log('成功加载课程数据:', coursesData.length, '个课程');
             
-            // 隐藏加载提示，显示内容
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('content').style.display = 'block';
+//             // 隐藏加载提示，显示内容
+//             document.getElementById('loading').style.display = 'none';
+//             document.getElementById('content').style.display = 'block';
             
-            renderCoursesTable();
-            updateSummaryStats();
+//             renderCoursesTable();
+//             updateSummaryStats();
             
-            // 加载保存的学习进度
-            loadAndApplyProgress();
-        } else {
-            throw new Error('无法加载课程数据文件');
-        }
-    } catch (error) {
-        console.error('加载课程数据失败:', error);
+//             // 加载保存的学习进度
+//             loadAndApplyProgress();
+//         } else {
+//             throw new Error('无法加载课程数据文件');
+//         }
+//     } catch (error) {
+//         console.error('加载课程数据失败:', error);
         
-        // 显示错误信息
-        document.getElementById('loading').style.display = 'none';
-        document.getElementById('error').style.display = 'block';
-    }
-}
+//         // 显示错误信息
+//         document.getElementById('loading').style.display = 'none';
+//         document.getElementById('error').style.display = 'block';
+//     }
+// }
 
 function compareCourseIdArrAndCoursesData() {
     const CoursesDataIdArr = coursesData.map(course => course.courseId);
@@ -226,10 +226,41 @@ function renderCoursesTable() {
                 </div>
                 <div class="progress-text">0%</div>
             </td>
+            <td>
+                <button class="control-btn delete-btn" onclick="deleteCourse(${courseIndex})">🗑️</button>
+            </td>
         `;
         
         tbody.appendChild(row);
     });
+}
+
+// 删除课程
+function deleteCourse(courseIndex) {
+    if (confirm('确定要删除这个课程吗？此操作不可撤销。')) {
+        // 从coursesData数组中删除课程
+        coursesData.splice(courseIndex, 1);
+        
+        // 从courseIdArr数组中删除对应的课程ID
+        if (courseIndex < courseIdArr.length) {
+            courseIdArr.splice(courseIndex, 1);
+        }
+        
+        // 更新本地存储
+        localStorage.setItem('coursesData', JSON.stringify(coursesData));
+        localStorage.setItem('courseIdArr', JSON.stringify(courseIdArr));
+        
+        // 重新渲染表格
+        renderCoursesTable();
+        
+        // 重新计算进度
+        calculateProgress();
+        
+        // 更新汇总统计
+        updateSummaryStats();
+        
+        console.log('课程已删除，剩余课程数:', coursesData.length);
+    }
 }
 
 // 更新汇总统计
