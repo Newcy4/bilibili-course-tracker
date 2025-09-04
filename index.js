@@ -46,7 +46,7 @@ function loadProgressFromLocal() {
         const savedData = localStorage.getItem(STORAGE_KEY);
         if (savedData) {
             const progressData = JSON.parse(savedData);
-            console.log('从本地存储加载学习进度:', progressData);
+            // console.log('从本地存储加载学习进度:', progressData);
             return progressData;
         }
     } catch (error) {
@@ -105,7 +105,7 @@ function clearLocalProgress() {
 
 function compareCourseIdArrAndCoursesData() {
     const CoursesDataIdArr = coursesData.map(course => course.courseId);
-    console.log("CoursesDataIdArr", CoursesDataIdArr);
+    // console.log("CoursesDataIdArr", CoursesDataIdArr);
     for (let i = 0; i < courseIdArr.length; i++) {
         const courseId = courseIdArr[i];
         if(!CoursesDataIdArr.includes(courseId)) {

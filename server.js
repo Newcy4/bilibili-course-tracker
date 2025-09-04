@@ -46,7 +46,7 @@ app.post('/api/bilibili', async (req, res) => {
                 errorList.push({htmlContent:matchCourseList(response.data), name: matchCourseName(response.data), courseId: courseIdArr[i]});
             }
         }
-        console.log("解析结果➡️htmlList",htmlList, "errorList", errorList)
+        // console.log("解析结果➡️htmlList",htmlList, "errorList", errorList)
         
         // 设置CORS头，允许前端访问
         res.header('Access-Control-Allow-Origin', '*');
