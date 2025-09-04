@@ -1,4 +1,5 @@
-// todo: 解决某些连接解析失败的情况，比如https://www.bilibili.com/video/BV1atCRYsE7x/?spm_id_from=333.337.search-card.all.click
+// todo1: 解决某些连接解析失败的情况，比如https://www.bilibili.com/video/BV1atCRYsE7x/?spm_id_from=333.337.search-card.all.click
+// todo2: 添加课程时，请求需要增加的课程数据，不要全部又请求一遍
 
 courseIdArr =  [];  //课程id 数组
 // 课程数据存储
@@ -364,72 +365,113 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// 导出学习进度为JSON文件
+// 导出学习进度
 function exportProgress() {
+    // 收集当前进度数据
     const progressData = {};
-    
     coursesData.forEach((course, courseIndex) => {
         const input = document.querySelector(`input[data-course-index="${courseIndex}"]`);
         const watchedEpisodes = parseInt(input.value) || 0;
         progressData[course.name] = watchedEpisodes;
     });
     
-    // 添加导出时间戳
+    // 创建导出数据对象
     const exportData = {
-        exportTime: new Date().toISOString(),
-        progress: progressData
+        courseIdArr: courseIdArr,
+        coursesData: coursesData,
+        bilibiliCourseProgress: progressData,
+        exportTime: new Date().toISOString()
     };
     
-    // 创建下载链接
-    const dataStr = JSON.stringify(exportData, null, 2);
-    const dataBlob = new Blob([dataStr], {type: 'application/json'});
-    const url = URL.createObjectURL(dataBlob);
-    
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `bilibili-course-progress-${new Date().toISOString().split('T')[0]}.json`;
-    link.click();
-    
-    URL.revokeObjectURL(url);
-    console.log('学习进度已导出');
+    // 显示弹窗
+    showProgressModal('导出进度', JSON.stringify(exportData, null, 2), 'export');
 }
 
 // 导入学习进度
-function importProgress(event) {
-    const file = event.target.files[0];
-    if (!file) return;
+function importProgress() {
+    showProgressModal('导入进度', '', 'import');
+}
+
+// 显示进度弹窗
+function showProgressModal(title, content, mode) {
+    const modal = document.getElementById('progressModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const textarea = document.getElementById('progressTextarea');
+    const confirmBtn = document.getElementById('modalConfirmBtn');
+    const modalTitleDesc = document.getElementById('modalTitleDesc');
+
+    if(mode == 'export') {
+        modalTitleDesc.style.display = 'block';
+    } else {
+        modalTitleDesc.style.display = 'none';
+    }
     
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        try {
-            const importData = JSON.parse(e.target.result);
-            let progressData = importData.progress || importData; // 兼容旧格式
-            
-            let importedCount = 0;
-            coursesData.forEach((course, courseIndex) => {
-                const input = document.querySelector(`input[data-course-index="${courseIndex}"]`);
-                const savedEpisodes = progressData[course.name];
+    modalTitle.textContent = title;
+    textarea.value = content;
+    textarea.readOnly = (mode === 'export');
+    
+    if (mode === 'export') {
+        confirmBtn.textContent = '复制';
+        confirmBtn.onclick = function() {
+            textarea.select();
+            document.execCommand('copy');
+            alert('数据已复制到剪贴板！');
+        };
+    } else {
+        confirmBtn.textContent = '导入';
+        confirmBtn.onclick = function() {
+            try {
+                const importData = JSON.parse(textarea.value);
                 
-                if (savedEpisodes && savedEpisodes > 0) {
-                    input.value = savedEpisodes;
-                    importedCount++;
+                // 验证数据格式
+                if (!importData.courseIdArr || !importData.coursesData || !importData.bilibiliCourseProgress) {
+                    throw new Error('数据格式不正确');
                 }
-            });
-            
-            // 重新计算进度并保存
-            calculateProgress();
-            saveProgressToLocal();
-            
-            alert(`成功导入 ${importedCount} 个课程的学习进度！`);
-            console.log('学习进度导入成功:', progressData);
-        } catch (error) {
-            alert('导入失败：文件格式不正确');
-            console.error('导入进度失败:', error);
-        }
-    };
+                
+                // 更新全局变量
+                courseIdArr = importData.courseIdArr;
+                coursesData = importData.coursesData;
+                
+                // 更新localStorage
+                localStorage.setItem('courseIdArr', JSON.stringify(courseIdArr));
+                localStorage.setItem('coursesData', JSON.stringify(coursesData));
+                
+                // 重新渲染表格
+                renderCoursesTable();
+                
+                // 应用进度数据
+                coursesData.forEach((course, courseIndex) => {
+                    const input = document.querySelector(`input[data-course-index="${courseIndex}"]`);
+                    const savedEpisodes = importData.bilibiliCourseProgress[course.name];
+                    
+                    if (savedEpisodes && savedEpisodes > 0) {
+                        input.value = savedEpisodes;
+                    }
+                });
+                
+                // 重新计算进度
+                calculateProgress();
+                saveProgressToLocal();
+                updateSummaryStats();
+                
+                closeProgressModal();
+                alert('进度导入成功！');
+                console.log('进度导入成功:', importData);
+                
+            } catch (error) {
+                alert('导入失败：' + error.message);
+                console.error('导入进度失败:', error);
+            }
+        };
+    }
     
-    reader.readAsText(file);
-    event.target.value = ''; // 清空文件选择
+    modal.style.display = 'block';
+}
+
+// 关闭进度弹窗
+function closeProgressModal() {
+    const modal = document.getElementById('progressModal');
+    modal.style.display = 'none';
 }
 
 // 添加按钮事件监听器
@@ -487,15 +529,21 @@ function initializeControlButtons() {
     
     // 导出按钮
     document.getElementById('exportProgressBtn').addEventListener('click', exportProgress);
-
-    // 添加课程按钮添加课程按钮
-    document.getElementById('addCourseBtn').addEventListener('click', addCourse);
     
     // 导入按钮
-    document.getElementById('importProgressBtn').addEventListener('click', function() {
-        document.getElementById('importProgressFile').click();
-    });
+    document.getElementById('importProgressBtn').addEventListener('click', importProgress);
     
-    // 文件选择器
-    document.getElementById('importProgressFile').addEventListener('change', importProgress);
+    // 添加课程按钮
+    document.getElementById('addCourseBtn').addEventListener('click', addCourse);
+    
+    // 弹窗关闭事件
+    document.querySelector('.close').addEventListener('click', closeProgressModal);
+    document.getElementById('modalCancelBtn').addEventListener('click', closeProgressModal);
+    
+    // 点击弹窗外部关闭
+    document.getElementById('progressModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeProgressModal();
+        }
+    });
 }
