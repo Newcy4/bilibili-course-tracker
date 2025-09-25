@@ -1,11 +1,14 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors'); // 引入 cors 模块
 const axios = require('axios');
 
 
 const app = express();
 const PORT = 8000;
 
+// 添加 CORS 中间件（最简单配置，允许所有跨域请求）
+app.use(cors());  // 方便本地测试
 // 添加JSON解析中间件
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -40,10 +43,11 @@ app.post('/bilibili', async (req, res) => {
                 timeout: 10000, // 10秒超时
                 responseType: 'text' // 确保返回文本格式
             });
-            if(matchCourseList(response.data)) {
-                htmlList.push({htmlContent:matchCourseList(response.data), name: matchCourseName(response.data), courseId: courseIdArr[i]});
+            courseList = matchCourseList(response.data)
+            if(courseList) {
+                htmlList.push({htmlContent:courseList, name: matchCourseName(response.data), courseId: courseIdArr[i]});
             } else {
-                errorList.push({htmlContent:matchCourseList(response.data), name: matchCourseName(response.data), courseId: courseIdArr[i]});
+                errorList.push({htmlContent:courseList, name: matchCourseName(response.data), courseId: courseIdArr[i]});
             }
         }
         // console.log("解析结果➡️htmlList",htmlList, "errorList", errorList)
@@ -77,13 +81,13 @@ app.post('/bilibili', async (req, res) => {
 function matchCourseList(html) {
     try {
         // 使用正则表达式匹配指定区域
-        const startPattern = /<div class="video-pod__list multip list"[^>]*>/i;
+        const startPattern = /<div class="video-pod__list[^>]*>/i;  // 第一种情况，如：https://www.bilibili.com/video/BV1Za4y1r7KE
         const endPattern = /<div class="teleport hidden"[^>]*>/i;
         
         // 找到开始位置
         const startMatch = html.match(startPattern);
         if (!startMatch) {
-            console.log('未找到开始标签: <div class="video-pod__list multip list">');
+            console.log('未找到开始标签: <div class="video-pod__list">');
             return null;
         }
         
