@@ -514,7 +514,7 @@ function initializeControlButtons() {
         const input = document.getElementById('addCourseInput');
         const courseUrl = input.value;
         // 匹配video/内容/ 之间的内容
-        const courseId = courseUrl.match(/video\/([^/]+)\//)[1];
+        const courseId = courseUrl.match(/video\/(BV[\w]{10})(?:\/|$|\?)/)[1];
         console.log('当前课程组内容：', typeof courseIdArr, courseIdArr);
         if(courseIdArr.includes(courseId)) {
             alert('课程已存在');
